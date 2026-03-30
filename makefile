@@ -1,5 +1,5 @@
-CSOURCE = $(wildcard demo/*.c)
-COBJS = $(patsubst demo/%.c,build/%.o,$(CSOURCE))
+CSOURCE = $(shell find . -name "*.c")
+COBJS = $(patsubst */%.c,build/%.o,$(CSOURCE))
 
 EXE := build/soundchip_demo
 CFLAGS := -Wall -Wextra -pedantic -I./src
@@ -18,7 +18,7 @@ run: $(EXE) $(CSOURCE)
 $(EXE): $(COBJS) | build
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ 
 
-build/%.o: src/%.c | build
+build/%.o: demo/%.c | build
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 build:
