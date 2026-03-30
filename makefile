@@ -1,8 +1,8 @@
-CSOURCE = $(wildcard src/*.c)
-COBJS = $(patsubst src/%.c,build/%.o,$(CSOURCE))
+CSOURCE = $(wildcard demo/*.c)
+COBJS = $(patsubst demo/%.c,build/%.o,$(CSOURCE))
 
-EXE := build/soundchip
-CFLAGS := -Wall -Wextra -pedantic
+EXE := build/soundchip_demo
+CFLAGS := -Wall -Wextra -pedantic -I./src
 LDFLAGS := -lm -lSDL2
 
 CC := gcc
