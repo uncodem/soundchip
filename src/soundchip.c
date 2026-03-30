@@ -195,6 +195,7 @@ static float voice_sample(Voice *v) {
 
 void voice_note_on(Voice *v) {
     v->env.state = ENV_ATTACK;
+    v->env.value = 0.0f;
 }
 
 void voice_note_off(Voice *v) {
