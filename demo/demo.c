@@ -2,6 +2,7 @@
 #include <stdbool.h>
 
 #include "soundchip.h"
+#include "piano_ui.h"
 
 #include <SDL2/SDL.h>
 
@@ -9,38 +10,9 @@
 #define SAMPLE_COUNT 512
 #define WINDOW_SIZE 640
 
-#define KEY_WIDTH 70
-#define KEY_HEIGHT 300
-
 void audio_callback(void *userdata, Uint8 *stream, int len) {
     SoundChip *chip = (SoundChip*)userdata;
     soundchip_generate(chip, stream, len);
-}
-
-void draw_piano(SDL_Renderer *renderer, int offsx, int offsy, bool keys[12]) {
-    SDL_Rect rect = {0};
-    rect.x = offsx;
-    rect.y = offsy;
-    rect.w = KEY_WIDTH;
-    rect.h = KEY_HEIGHT;
-    
-    for (int i = 0; i < 7; i++) {
-        if (keys[i]) SDL_SetRenderDrawColor(renderer, 200, 200, 255, 255);
-        else SDL_SetRenderDrawColor(renderer, 244, 244, 244, 255);
-        SDL_RenderFillRect(renderer, &rect);
-        rect.x += 4 + KEY_WIDTH;
-    }
-
-    rect.w /= 2;
-    rect.h *= 0.65f;
-    rect.x = offsx + 18 + KEY_WIDTH/2;
-
-    for (int i = 0; i < 5; i++) {
-        if (keys[i+7]) SDL_SetRenderDrawColor(renderer, 128, 16, 16, 255);
-        else SDL_SetRenderDrawColor(renderer, 32, 32, 32, 255);
-        SDL_RenderFillRect(renderer, &rect);
-        rect.x += (4 + KEY_WIDTH) * ((i == 1) ? 2 : 1);
-    }
 }
 
 int find_voice(bool voice_activity[4]) {
