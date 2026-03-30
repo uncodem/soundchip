@@ -1,5 +1,4 @@
-CSOURCE = $(shell find . -name "*.c")
-COBJS = $(patsubst */%.c,build/%.o,$(CSOURCE))
+CSOURCE = demo/demo.c demo/piano_ui.c src/soundchip.c 
 
 EXE := build/soundchip_demo
 CFLAGS := -Wall -Wextra -pedantic -I./src
@@ -15,11 +14,8 @@ run: $(EXE) $(CSOURCE)
 	@echo -e "\nRunning ... " $< "\n"
 	@$<
 
-$(EXE): $(COBJS) | build
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ 
-
-build/%.o: demo/%.c | build
-	$(CC) $(CFLAGS) -c -o $@ $<
+$(EXE): $(CSOURCE) | build
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 build:
 	mkdir -p build
